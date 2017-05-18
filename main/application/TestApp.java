@@ -164,36 +164,38 @@ public class TestApp extends Application {
             node.setCenter(system_settings);
 
             // Toggle Fullscreen
-            ToggleButton fullscreen_mode = new ToggleButton("Fullscreen Off");
+            ToggleButton fullscreen_mode = new ToggleButton("Fullscreen: OFF");
             system_settings.getChildren().add(fullscreen_mode);
             fullscreen_mode.setOnAction(toggle_fullscreen ->  {
                 if (fullscreen_mode.isSelected()) {
                     primaryStage.setFullScreen(true);
-                    fullscreen_mode.setText("Fullscreen On");
+                    fullscreen_mode.setText("Fullscreen: ON");
                 } else {
                     primaryStage.setFullScreen(false);
-                    fullscreen_mode.setText("Fullscreen Off");
+                    fullscreen_mode.setText("Fullscreen: OFF");
                 }
             });
 
-            ToggleButton shadow_mode = new ToggleButton("Shadows On");
+            ToggleButton shadow_mode = new ToggleButton("Shadows: ON");
             system_settings.getChildren().add(shadow_mode);
             shadow_mode.setOnAction(toggle_shadows ->  {
                 if (shadow_mode.isSelected()) {
-                    for (Pane winnode : open_windows) {
-                        winnode.setEffect(null);
-                    }
-                    shadow_mode.setText("Shadows Off");
-                } else {
                     //DropShadow dropShadow = new DropShadow();
                     dropShadow.setRadius(5.0);
                     dropShadow.setColor(Color.color(0, 0, 0, 0.6));
                     for (Pane winnode : open_windows) {
                         winnode.setEffect(dropShadow);
                     }
-                    shadow_mode.setText("Shadows On");
+                    shadow_mode.setText("Shadows: ON");
+                } else {
+                    for (Pane winnode : open_windows) {
+                        winnode.setEffect(null);
+                    }
+                    shadow_mode.setText("Shadows: OFF");
                 }
             });
+            shadow_mode.setSelected(true);
+
             // add the node to the root pane 
             root.getChildren().add(node);
             open_windows.add(node);
