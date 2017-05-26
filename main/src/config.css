@@ -3,6 +3,11 @@
 	-fx-border-color: transparent ;
 }
 
+.scroll-pane, .scroll-pane .viewport, .scroll-pane .content {
+    -fx-background-color: transparent ;
+	-fx-border-color: transparent ;
+}
+
 .text-area > .scroll-pane {-fx-vbar-policy: never ; /* Toggle visability of the virtical scrollbar (always,needed,never) */} /* */
 
 /** ----------------------------- **/
