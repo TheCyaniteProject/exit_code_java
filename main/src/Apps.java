@@ -59,7 +59,7 @@ public class Apps {
         textArea.setStyle("-fx-text-fill: white");
         textArea.setWrapText(true);
         node.setCenter(textArea);
-        textArea.setText("Enter some text...");
+        textArea.setPromptText("Enter some text...");
         // add the node to the root pane 
         root.getChildren().add(node);
         open_windows.add(node);
