@@ -18,7 +18,7 @@ Now, I am just one person. I have a vision, a dream; of what this game can be. B
 Thank you for all the support.
 
 This update will be exclusive to patreon for now. Probably until Pre-Release 9 - As a thank you for your support.
-([View on Patreon](https://www.patreon.com/posts/pre-release-8-11354560)) https://www.patreon.com/posts/pre-release-8-11354560
+([View on Patreon](https://www.patreon.com/posts/pre-release-8-11354560))
 
 Click on the above link for a screenshot.
 
