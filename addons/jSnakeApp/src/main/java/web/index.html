@@ -1,0 +1,1102 @@
+﻿<!DOCTYPE html>
+<html>
+<title>JSnake</title>
+<!-- JSnake v1.0  :  by David Refoua -->
+<!-- DRS David Soft --- david@refoua.me -->
+<!-- Project URL: http://blog.refoua.me/post/drs-jsnake/ -->
+<!-- This is the full source code, including the debugging tools. -->
+<!-- All rights reserved!! Feel free to modify my code or design a map and submit it to my blog or email! ;-) -->
+<style>
+*{
+-webkit-tap-highlight-color: transparent;
+-moz-tap-highlight-color: transparent;
+}
+HTML{
+	width: 100%;
+	height: 100%;
+}
+
+BODY{
+	height: 100%;
+	margin: 0px;
+}
+
+#grid{
+	width:  100%;
+	height: 100%;
+	background: black;
+	margin: auto;
+}
+
+.max{
+	width:  100%;
+	height: 100%;
+}
+
+
+#grid tr td, .cell{
+	font-family: Tahoma, sans-serif;
+	font-size: 8pt;
+	text-align: center;
+	-webkit-transition: all ease 120ms;
+	opacity: 1;
+	border: 1px solid transparent;
+	
+}
+
+#grid tr td.body, .body{
+	-webkit-transition: all ease 1700ms;
+	background: #0C3B9C;
+}
+
+#grid tr td.active, .active{
+	background: #125aed;
+	box-shadow: 0px 0px 12px #125aed;
+}
+
+#grid tr td.over, .over{
+	-webkit-transition: all ease 800ms;
+	background: red;
+	box-shadow: 0px 0px 12px red;
+}
+
+#grid tr td.seed, .seed{
+	background: green;
+	box-shadow: 0px 0px 30px #00D700;
+	border-radius: 5px;
+	-webkit-animation: glow 1s infinite linear;
+	-webkit-transition: all ease 1500ms;
+}
+
+@-webkit-keyframes glow {
+	0%,100%    { }
+	50%        { box-shadow: 0px 0px 25px green; }
+}
+
+#grid tr td.potion, .potion{
+	border-radius: 2px;
+	-webkit-animation: glit .5s infinite linear;
+	-webkit-transition: all ease 500ms;
+		  background: #9C00F0; box-shadow: 0px 0px 20px Fuchsia;
+}
+
+.crazy{
+	-webkit-animation: crazy .3s infinite linear;
+}
+
+@-webkit-keyframes crazy {
+	0%         { }
+	25%        { -webkit-transform: translate(-90px, -30px); }
+	50%        { -webkit-transform: translate(-50px, -50px); }
+	75%        { -webkit-transform: translate(-80px, -20px); }
+	100%       { -webkit-transform: translate(-40px, -40px); }
+}
+
+@-webkit-keyframes glit {
+	0%,100% { }
+	50%     { background: #FF0FF9; box-shadow: 0px 0px 30px #FF0FF9;}
+}
+
+#grid tr td.eat, .eat{
+	background: #00D7FF;
+	box-shadow: 0px 0px 10px #0088A1;
+}
+
+#grid tr td.block, .block{
+	border: 1px solid yellow;
+	box-shadow: inset 0px 0px 10px yellow;
+}
+
+#grid tr td.detour1, #grid tr td.detour2, .detour1, .detour2{
+	border: 1px solid cyan;
+	box-shadow: inset 0px 0px 10px cyan;
+}
+
+#grid tr td.reverse, .reverse{
+	border: 1px solid Fuchsia;
+	box-shadow: inset 0px 0px 10px Fuchsia;
+}
+
+#grid tr td.teleport, .teleport{
+	border: 1px solid #125aed;
+	box-shadow: inset 0px 0px 12px 1px #125aed;
+}
+
+#grid tr td.switch, .switch{
+	border: 1px solid lime;
+	box-shadow: inset 0px 0px 10px lime;
+}
+
+#grid tr td.switchalt, .switchalt{
+	border: 1px solid red;
+	box-shadow: inset 0px 0px 10px red;
+}
+
+#grid tr td.dizzy, .dizzy{
+	background: #BD02FB;
+	box-shadow: 0px 0px 10px Fuchsia;
+}
+
+@-webkit-keyframes hued {
+	0%,100%    { }
+	50%        { -webkit-filter: hue-rotate(30deg) }
+}
+
+.flash{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+	top: 0px; legt: 0px;
+	background: transparent;
+	border-radius: 2%;
+	-webkit-animation: flash .2s 5 linear;
+}
+
+@-webkit-keyframes flash {
+	0%,100%    { }
+	50%        { background: rgba(255,200,255,.8); }
+}
+
+
+
+
+.toolbox{
+	background: rgba(0,0,0,.8);
+	border: 1px solid #125aed;
+	position: absolute;
+	width: auto;
+	height: auto;
+	padding: 0px;
+	margin: 0px;
+	font-family: Myriadpro, Ubuntu, 'Segoe UI', Tahoma, Arial, sans-serif;
+	font-size: 8pt;
+	color: white;
+	text-shadow: 1px 1px rgba(0,0,0,.5);
+	cursor: default;
+}
+
+.toolbox .titlebar{
+	background: #125aed;
+	text-align: center;
+	display:block;
+	font-weight: bold;
+	width: 100%;
+}
+
+.toolbox .contentbox{
+	margin: auto;
+	padding: 0;
+	display: block;
+	width: 100%;
+}
+
+.toolbox .contentbox table{
+	border-spacing: 0;
+	margin: auto;
+	padding: 0;
+}
+
+.toolbox .contentbox table td{
+	margin: auto;
+	vertical-align: middle;
+}
+
+.toolbox input{
+	background: transparent;
+	color: white;
+	border: 1px solid gray; outline: none;
+	font-weight: bold;
+	width: 50px;
+	text-align: center;
+}
+
+.toolbox button{
+	margin: auto;
+	text-align: center;
+	width: 100%;
+	background: transparent;
+	border: 1px solid #125aed;
+	font-weight: bold;
+	color: white;
+	-webkit-transition: all 150ms ease;
+	text-shadow: 1px 1px black;
+}
+
+.toolbox button:hover{
+	color: #125aed;
+}
+
+.toolbox button:active{
+	color: white;
+	background: #125aed;
+}
+
+.toolbox tr td hr{
+	border: 0px hidden transparent;
+	border-top: 1px solid #125aed;
+}
+
+.cell{
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+}
+</style>
+
+<div id="TheEffect"></div>
+<table id="grid" cellspacing=0 style="position: absolute;"></table>
+
+<div id="toolbox" class="toolbox" style="top: 30px; left: 10px">
+<label for="toolbox" class="titlebar" onmousedown="dragStart(event, this.parentNode)">JSnake: Toolbox</label>
+
+<div class="contentbox">
+<noscript><b><font color=red><center>Please enable JavaScript to continue!</center></font></b></noscript>
+
+<table>
+
+<tr>
+<td><label for='lbla'>Position A:</label></td>
+<td><input  id='lbla' value='0' /> <br/></td>
+</tr>
+
+<tr>
+<td><label for='lblb'>Position B:</label></td>
+<td><input  id='lblb' value='0' /> <br/></td>
+</tr>
+
+<tr><td colspan='2'><hr></td></tr>
+
+<tr>
+<td><label for='lblpoints'>Points:</label></td>
+<td><input  id='lblpoints' value='0' /> <br/></td>
+</tr>
+
+<tr>
+<td><label for='lblsnake'>Length:</label><td>
+<input  id='lblsnake' value='0' /> <br/><td>
+</tr>
+
+<tr>
+<td><label for='lblminSeeds'>Minimum Seeds:</label></td>
+<td><input  id='lblminSeeds' value='0' /> <br/></td>
+</tr>
+
+<tr>
+<td><label for='lblinterval'>Interval:</label></td>
+<td><input  id='lblinterval' value='0' /> <br/></td>
+</tr>
+
+<tr><td colspan='2'><hr></td></tr>
+
+<tr>
+<td><label for='lblgameover'>Game Paused:</label></td>
+<td><input  id='lblgameover' value='false' /> <br/></td>
+</tr>
+
+<tr>
+<td><label for='lbladdblock'>Selected Block Type:</label></td>
+<td><input  id='lbladdblock' value='' /> <br/></td>
+</tr>
+
+<tr>
+<td colspan=2>
+<label for='stsdontdie'><input id='stsdontdie' type='checkbox' style='width: auto;' />
+No Game Over
+</label>
+</td>
+</tr>
+
+<tr>
+<td colspan=2>
+<button onclick="go('pause')">Pause / Resume</button>
+</td>
+</tr>
+
+</table>
+
+<script>
+function updateLbls(){
+	var lbls = _('toolbox').getElementsByTagName('input');
+	for (l=0;l<lbls.length;l++){
+	if (lbls[l].id.indexOf('lbl')===0) {
+		curV = lbls[l].id.replace('lbl', '');
+
+		if (lbls[l].value != eval(curV)) lbls[l].value = eval(curV);
+		lbls[l].oninput = new Function (" if (this.value != '' && isInteger(this.value)) this.value=parseInt(this.value); " + curV + "=this.value;");
+
+		//adding the event listerner for Mozilla
+		if(typeof lbls[l].addEventListener != 'undefined')
+		lbls[l].addEventListener('DOMMouseScroll', mouseWheel, false);
+		//for IE/OPERA etc
+		lbls[l].onmousewheel = mouseWheel;
+	} else
+	if (lbls[l].id.indexOf('sts')===0) {
+		curV = lbls[l].id.replace('sts', '');
+		lbls[l].checked = eval(curV);
+
+		lbls[l].onclick = new Function (curV + " = (this.checked)");
+	}
+	}
+}
+
+
+function mouseWheel(event)
+{
+	var delta = 0;
+
+	if (!event) event = window.event;
+
+	// normalize the delta
+	if (event.wheelDelta) {
+
+		// IE & Opera
+		delta = event.wheelDelta / 60;
+
+	} else if (event.detail) {
+
+		// W3C
+		delta = -event.detail / 2;
+	}
+
+	if(this.value!='' && isInteger(this.value)){
+		this.value = parseInt(this.value);
+
+		if(delta>0)
+		this.value++;
+
+		if(delta<0)
+		this.value--;
+
+		eval(this.id.replace('lbl', '')+' = '+this.value);
+	}
+}
+
+
+
+
+function isInteger(s)
+{
+      var i;
+	s = s.toString();
+      for (i = 0; i < s.length; i++)
+      {
+         var c = s.charAt(i);
+         if (isNaN(c)) 
+	   {
+		return false;
+	   }
+      }
+      return true;
+}
+
+</script>
+</div>
+</div>
+
+<div id="mapdesign" class="toolbox" style="top: 330px; left: 10px">
+<label for="mapdesign" class="titlebar" onmousedown="dragStart(event, this.parentNode)">JSnake: Map Design</label>
+
+<div class="contentbox">
+<noscript><b><font color=red><center>Please enable JavaScript to continue!</center></font></b></noscript>
+
+<table>
+<tr>
+<td>
+Please select Block type to add:
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+<div class="cell seed"></div>
+<div class="cell potion"></div>
+<div class="cell block"></div>
+<div class="cell detour1"></div>
+<div class="cell detour2"></div>
+<div class="cell reverse"></div>
+<div class="cell teleport"></div>
+<div class="cell switch"></div>
+</td>
+</tr>
+<tr>
+<td style="text-align: center; display: none;">
+<input id="mapCode" readonly="readonly" style="width: 90%; margin: auto;" title="Copy all of this and paste into the code script!" />
+</td>
+</tr>
+<tr>
+<td>
+<button onclick="
+if (typeof updateLbls == 'function') updateLbls();
+if(addblock==''){alert('Please select the block type from the above box, first!'); return false;}
+cb=blocksOf(addblock);var B='';for(q=0;q<cb.length;q++) {B+=('['+cb[q].a+','+cb[q].b+']')+(q+1<cb.length?',':'')}
+if(B==''){alert('No blocks with type of \''+ addblock +'\' found!\nPlease try another type!'); return false;}
+B='map.'+addblock+' = ['+B+'];';
+_('mapCode').parentNode.style.display = '';
+_('mapCode').value=B;
+">Generate Map</button>
+</td>
+</tr>
+</table>
+
+<script>
+function MapDesign(){
+	var Cells = getElementsByClassNameX('cell', _('mapdesign'), 'div')
+	for(C=0;C<Cells.length;C++)
+	{
+		CurC = Cells[C].className.replace('cell ', '');
+		Cells[C].title   = "Block type: " + CurC;
+		Cells[C].onclick = new Function ("addblock='"+CurC+"'; if (typeof updateLbls == 'function') updateLbls();");
+	}
+}
+</script>
+
+</div>
+</div>
+
+<div id="virtualpad" class="toolbox" style="top: 330px; left: 190px">
+<label for="virtualpad" class="titlebar" onmousedown="dragStart(event, this.parentNode)">JSnake: Virtual Pad</label>
+
+<div class="contentbox">
+
+<table cellspacing="0" >
+<tr><td></td><td style="text-align: center;"><button onclick="pad(2)">↑</button></td><td></td></tr>
+<tr><td style="text-align: center;"><button onclick="pad(4)">←</button></td><td></td>
+<td style="text-align: center;"><button onclick="pad(6)">→</button></td></tr>
+<tr><td></td><td style="text-align: center;"><button onclick="pad(8)">↓</button></td><td></td></tr>
+</table>
+
+</div>
+
+</div>
+
+<!--
+<table cellspacing="0" class="max" style="position: absolute;">
+<tr><td onclick="pad(1)"></td><td onclick="pad(2)"></td><td onclick="pad(3)"></td></tr>
+<tr><td onclick="pad(4)"></td><td onclick="pad(5)"></td><td onclick="pad(6)"></td></tr>
+<tr><td onclick="pad(7)"></td><td onclick="pad(8)"></td><td onclick="pad(9)"></td></tr>
+</table>
+-->
+
+<script>
+
+//-------------------- code start ------------------//
+
+map = {x:25, y:50};
+
+map.block = [[4,18],[4,19],[4,20],[4,21],[4,24],[4,25],[4,26],[4,27],[4,31],[4,32],[4,33],[4,34],[5,18],[5,22],[5,24],[5,28],[5,30],[6,18],[6,22],[6,24],[6,28],[6,30],[7,18],[7,22],[7,24],[7,25],[7,26],[7,27],[7,31],[7,32],[7,33],[8,18],[8,22],[8,24],[8,28],[8,34],[9,18],[9,22],[9,24],[9,28],[9,34],[10,18],[10,19],[10,20],[10,21],[10,24],[10,28],[10,30],[10,31],[10,32],[10,33]];
+
+/*
+h=0,v=1;
+a=15;b=17;
+map.block    = [[8,44],[8,46],[10,44],[10,46],[11,37],[11,39],[11,40],[11,41],[11,42],[11,43],[11,44],[11,46],[13,37],[13,39],[13,40],[13,41],[13,42],[13,43],[13,44],[13,46],[14,37],[14,39],[14,44],[14,46],[15,37],[15,39],[15,44],[15,46],[16,37],[16,39],[16,44],[16,46],[17,37],[17,39],[17,44],[17,46],[18,37],[18,39],[18,44],[18,46],[19,37],[19,39],[19,40],[19,41],[19,42],[19,43],[19,44],[19,46],[21,37],[21,39],[21,40],[21,41],[21,42],[21,43],[21,44],[21,46]];
+map.detour1  = [[8,45],[9,46],[20,37],[21,38]];
+map.detour2  = [[11,38],[12,37],[20,46],[21,45]];
+map.reverse  = [[12,46],[15,13]];
+map.switch   = [[15,24],[15,30]];
+map.teleport = [[9,37],[15,34]];
+map.seed     = [[12,44]];
+map.potion   = [[15,14]];
+*/
+
+//map.teleport = [[8,18],[8,20],[8,22],[8,24],[8,26],[9,19],[9,21],[9,23],[9,25],[10,18],[10,20],[10,22],[10,24],[10,26],[11,19],[11,21],[11,23],[11,25],[12,18],[12,20],[12,22],[12,24],[12,26],[13,19],[13,21],[13,23],[13,25],[14,18],[14,20],[14,22],[14,24],[14,26]];
+
+var DefaultBlock = //to set predefined attributes to each cell
+	{
+		ondblclick    : new Function ("if(this.className=='')window.point=cordsOf(this);return false;"),
+		onclick       : new Function ("if(this.className=='' || event.ctrlKey)this.className=addblock;else if(this.className==addblock || event.ctrlKey) this.className='';return false;"),
+		oncontextmenu : new Function ("alert('a:'+cordsOf(this).a+'\\t   b:'+cordsOf(this).b+'\\nType: '+this.className); return false;")
+	};
+
+reGrid(map.x,map.y); // building the space
+
+//designing the map
+for(Type in map) if (typeof map[Type] == 'object')
+for(k=0;k<map[Type].length;k++)
+block(map[Type][k][0], map[Type][k][1], Type);
+
+
+window.gameover = false;
+window.dontdie  = false;
+var actives  = [];  //current active blocks
+var addblock = '';  //to design the map
+
+var snake = 5;
+var minSeeds = 1;
+var interval = 170; //speed
+var a=a||Math.round(map.x/2), b=b||Math.round(map.y/2); //start point: center
+var h=h||0, v=v||1; //start direction: right
+var points=0; //score
+
+route();
+
+
+function Random(){
+	T = 'new block';
+	while(T!='')
+	{
+		var x=Math.floor(Math.random()*map.x); if(x==0) x=1;
+		var y=Math.floor(Math.random()*map.y); if(y==0) y=1;
+		var T=block(x,y).className;
+	}
+
+	return {x:x,y:y};
+}
+
+function route(){
+	if (blocksOf('seed').length<minSeeds) {
+		var Rand = Random();
+		block(Rand.x, Rand.y, 'seed');
+	}
+
+	if(typeof point == 'object'){
+		block(point.a, point.b, 'potion');
+		var U = Math.round(Math.random()*1000)%2;
+		H=h; V=v;
+		h=0; v=0;
+
+		if ((U && a!=point.a) || (b==point.b)) {
+			if(a<point.a) h=+1;
+			if(a>point.a) h=-1;
+		} else {
+			if(b<point.b) v=+1;
+			if(b>point.b) v=-1;
+		}
+
+		if(H==-h && h!=0) h=H;
+		if(V==-v && v!=0) v=V;
+
+
+		var Crashers = '[body]-[block]';
+		if (Crashers.indexOf('['+block(a+h,b+v).className+']') != -1)
+		{
+			var around =   [block(a,b+1),
+					block(a,b-1),
+					block(a+1,b),
+					block(a-1,b)];
+
+			for (N=0;N<around.length;N++)
+			if (Crashers.indexOf('['+around[N].className+']') == -1)
+			{C=cordsOf(around[N]); h=C.a - a; v=C.b - b; break;}
+
+			if (Crashers.indexOf('['+block(a+h,b+v).className+']') != -1) { h=0; v=0; }
+		}
+	}
+
+	var H=h, V=v;
+	a+=h;   b+=v;
+
+	if (a==0) a=map.x; else a%=(map.x+1);
+	if (b==0) b=map.y; else b%=(map.y+1);
+	if (a<=0) a=1;
+	if (b<=0) b=1;
+
+	var allowtoenter = false, cdc = 0;
+
+	var head   = 'active';
+	var body   = 'body';
+	var refill = false;
+
+	if(block(a,b)){
+		while (allowtoenter != true){ if(cdc++>map.x*map.y) break; //Game could be crashed!
+		switch(block(a,b).className){
+			case 'detour1':
+			var refill = true;
+				window.h+=window.v; window.v=window.h-window.v;
+				window.h-=window.v; //swaped!
+				a-=H-h; b-=V-v;
+			break;
+			case 'detour2':
+			var refill = true;
+				window.h+=window.v; window.v=window.h-window.v;
+				window.h-=window.v; //swaped!
+				window.h*=-1; window.v*=-1; 
+				a-=H-h; b-=V-v;
+			break;
+			case 'reverse':
+				Z=actives[0]; a=Z.a; b=Z.b;
+				Z=[actives[0], actives[1]];
+				h=Z[0].a-Z[1].a; v=Z[0].b-Z[1].b;
+				a+=h; b+=v;
+				actives.reverse();
+			break;
+			case 'teleport':
+				Z=blocksOf('teleport');
+				for(s=0;s<Z.length;s++)
+				if (Z.length<=1 || (a+'-'+b!=Z[s].a+'-'+Z[s].b))
+				{A=Z[s].a+h;B=Z[s].b+v; break;}
+				a=A; b=B;
+			break;
+			case 'switch':
+				replaceType('block', 'noblock');
+				replaceType('switch', 'switchalt');
+
+				a+=h; b+=v;
+			break;
+			case 'switchalt':
+				replaceType('noblock', 'block');
+				replaceType('switchalt', 'switch');
+
+				a+=h; b+=v;
+			break;
+
+			case 'block':
+			case 'body':
+				allowtoenter = true;
+				var refill = true;
+
+				if(window.dontdie != true)
+				window.gameover = true;
+				var head='over';
+			break;
+
+			case 'seed':
+				allowtoenter = true;
+
+				snake+=3;
+				points++;
+				//interval -= 10;
+				var head='eat';
+			break;
+
+			case 'potion':
+				allowtoenter = true;
+
+				var head='dizzy';
+				window.point = undefined;
+
+				//effect(_('TheEffect'), 'flash', 1000)
+				//for(k=0;k<actives.length;k++) {K = actives[k]; K = block(K.a, K.b); effect(K, 'crazy', 1200)}
+			break;
+
+			default:
+				allowtoenter = true;
+			break;
+		}
+		}
+	}
+
+	if (refill == true) refill = block(a,b).className; else refill = '';
+
+	for(lost=0;actives.length-snake-lost>=0;lost++) {
+	no  = actives[actives.length-snake-lost]; if (no)
+	block((no.a),(no.b), '');			}
+
+	old = actives[actives.length-1]; if (old)
+	block((old.a),(old.b), body);
+
+	actives.push({a:a,b:b});
+	block((a),(b), head);
+
+	while(actives.length>snake)
+	actives = actives.splice(1, 100000000000);
+
+
+	if (typeof updateLbls == 'function') updateLbls();
+
+	window.clearTimeout(window.t); if(!window.gameover)
+	window.t = window.setTimeout("route()", interval);
+}
+
+function reGrid(x, y){
+	var grid = _('grid');
+	for (i=0;i<x;i++) {
+		var tr = document.createElement('tr');
+		for (j=0;j<y;j++) {
+			var td = document.createElement('td');
+			td.id  = 'block_'+(i+1)+'x'+(j+1);
+			for(Attr in DefaultBlock) td[Attr] = DefaultBlock[Attr];
+			tr.appendChild(td);
+		}
+		grid.appendChild(tr);
+	}
+}
+
+function block(x, y, c){
+	var obj = _('block_'+x+'x'+y);
+	if(obj != null){
+		if(typeof c == 'string') obj.className = (c);
+		return obj;
+	} else  return false;
+}
+
+function cordsOf(blck){
+	var cords = blck.id.replace('block_', '').split('x');
+	return {a:parseInt(cords[0]), b:parseInt(cords[1])};
+}
+
+function blocksOf(className){
+	var blks = [];
+	var objs = getElementsByClassNameX(className, grid, 'td');
+	for(q=0;q<objs.length;q++) blks.push(cordsOf(objs[q]));
+	return blks;
+}
+
+function replaceType(from, to){
+	BX = blocksOf(from);
+	for(bx=0;bx<BX.length;bx++)
+	block(BX[bx].a, BX[bx].b, to);
+}
+
+window.giveneffects = {curFX: 0}
+
+function effect(what, how, howlong){
+	if(what==-1) {
+		what = window.giveneffects[how][0];
+		how  = window.giveneffects[how][1];
+		howlong = -1;
+	}
+	if(what){
+		if(howlong > 0) {
+			var newFX = window.giveneffects.curFX++;
+			window.setTimeout("effect(-1, "+ newFX +")", howlong);
+			window.giveneffects[newFX] = [what, how];
+			what.className += ' ' + how;
+		} else {
+			what.className = 
+			what.className.replace(how, '');
+		}
+		
+	}
+}
+
+window.onkeydown = function(event){
+	key = event.keyCode || event.which;
+	if(event.shiftKey) document.title = key;
+	go(key, event);
+}
+
+function go(where, event){
+	switch (where){
+		case 68: //d
+		case 'd':
+			snake--;
+			break;
+
+		case 83: //s
+		case 's':
+			snake++;
+			break;
+
+		case 88: //x
+		case 'x':
+			interval/=2
+			break;
+
+		case 90: //z
+		case 'z':
+			interval*=2
+			break;
+
+		case 13: //enter key
+		case 'pause':
+			if(where=='pause' || event.ctrlKey){
+				if(window.gameover) {
+					window.gameover = false; route();
+				} else  window.gameover = true;
+			}
+			break;
+
+
+	//////////////////////////////////////////
+
+		case 37: //left
+		case 'left':
+			if(window.v!=+1 && window.h!=0){
+				window.h=0
+				window.v=-1
+			}
+			break;
+		case 38: //up
+		case 'up':
+			if(window.h!=+1 && window.v!=0){
+				window.h=-1
+				window.v=0
+			}
+			break;
+		case 39: //right
+		case 'right':
+			if(window.v!=-1 && window.h!=0){
+				window.h=0
+				window.v=+1
+			}
+			break;
+		case 40: //bottom
+		case 'down':
+			if(window.h!=-1 && window.v!=0){
+				window.h=+1
+				window.v=0
+			}
+			break;
+
+		case 33:
+		window.h=-1; window.v=+1;
+		break;
+		case 34:
+		window.h=+1; window.v=+1;
+		break;
+		case 35:
+		window.h=+1; window.v=-1;
+		break;
+		case 36:
+		window.h=-1; window.v=-1;
+		break;
+	}
+}
+
+function pad(t){
+	if(t==2) go('up');
+	if(t==4) go('left');
+	if(t==6) go('right');
+	if(t==8) go('down');
+}
+
+function _(id){
+	       if (document.getElementById) {
+		var return_var = document.getElementById(id); 
+	} else if (document.all) {
+		var return_var = document.all[id]; 
+	} else if (document.layers) { 
+		var return_var = document.layers[id]; 
+	} else {
+		return_var = lang.cantfetch.replace(new RegExp('%s', 'g'), id);
+		alert(return_var);
+	}
+	return return_var; 
+}
+
+function getElementsByClassNameX (className, node, tag){
+	node = node || this;
+	tag = tag || '*';
+	els = node.getElementsByTagName(tag);
+	wnt = new Array;
+	for (var count=0 ; els.length > count ; count ++)
+		if (	(els[count])
+			&& (els[count].className.indexOf(className) != -1)
+			&& (new RegExp("(?:^|\\s)" + className + "(?:$|\\s)")).test(els[count].className)
+		)
+			wnt = wnt.concat(els[count]);
+	return wnt;
+}
+
+if (typeof MapDesign == 'function') MapDesign();
+</script>
+<script type="text/javascript">//<![CDATA[
+// Determine browser and version.
+ 
+function Browser() {
+ 
+  var ua, s, i;
+ 
+  this.isIE    = false;
+  this.isNS    = false;
+  this.version = null;
+ 
+  ua = navigator.userAgent;
+ 
+  s = "MSIE";
+  if ((i = ua.indexOf(s)) >= 0) {
+    this.isIE = true;
+    this.version = parseFloat(ua.substr(i + s.length));
+    return;
+  }
+ 
+  s = "Netscape6/";
+  if ((i = ua.indexOf(s)) >= 0) {
+    this.isNS = true;
+    this.version = parseFloat(ua.substr(i + s.length));
+    return;
+  }
+ 
+  // Treat any other "Gecko" browser as NS 6.1.
+ 
+  s = "Gecko";
+  if ((i = ua.indexOf(s)) >= 0) {
+    this.isNS = true;
+    this.version = 6.1;
+    return;
+  }
+}
+ 
+var browser = new Browser();
+
+var Cursor =
+{
+	x: 0, y: 0,
+	init: function()
+	{
+		this.setEvent('mouse');
+		this.setEvent('touch');
+	},
+	setEvent: function(type)
+	{
+		var moveHandler = document['on' + type + 'move'] || function(){};
+		document['on' + type + 'move'] = function(e)
+		{
+			moveHandler(e);
+			Cursor.refresh(e);
+		}
+	},
+	refresh: function(e)
+	{
+		if(!e)
+		{
+			e = window.event;
+		}
+		if(e.type == 'mousemove')
+		{
+			this.set(e);
+		}
+		else if(e.touches)
+		{
+			this.set(e.touches[0]);
+		}
+	},
+	set: function(e)
+	{
+		if(e.pageX || e.pageY)
+		{
+			this.x = e.pageX;
+			this.y = e.pageY;
+		}
+		else if(e.clientX || e.clientY)
+		{
+			this.x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+			this.y = e.clientY + document.body.scrollTop  + document.documentElement.scrollTop;
+		}
+	}
+};
+Cursor.init();
+
+function Position(obj)
+{
+	var curleft = 0;
+	var curtop  = 0;
+	if(obj.offsetParent)
+	{
+		do
+		{
+			curleft += obj.offsetLeft;
+			curtop  += obj.offsetTop;
+		}
+		while((obj = obj.offsetParent));
+	}
+	return {x: curleft, y: curtop};
+}
+
+var _Null = new Function("return false");
+
+ 
+// Global object to hold drag information.
+ 
+var dragObj = new Object();
+dragObj.zIndex = 0;
+ 
+function dragStart(event, id) {
+ 
+  var el;
+  var x, y;
+ 
+  // If an element id was given, use it. Otherwise get the element id, if
+  // it was given.
+ 
+ if (id && typeof id == "object")
+   id=id.id;
+ 
+  // If an element id was given, find it. Otherwise use the element being
+  // clicked on.
+ 
+  if (id)
+    dragObj.elNode = document.getElementById(id);
+  else {
+    if (browser.isIE)
+      dragObj.elNode = window.event.srcElement;
+    if (browser.isNS)
+      dragObj.elNode = event.target;
+ 
+    // If this is a text node, use its parent element.
+ 
+    if (dragObj.elNode.nodeType == 3)
+      dragObj.elNode = dragObj.elNode.parentNode;
+  }
+ 
+  // Get cursor position with respect to the page.
+  x = Cursor.x;
+  y = Cursor.y;
+ 
+  // Save starting positions of cursor and element.
+ 
+  dragObj.cursorStartX = x;
+  dragObj.cursorStartY = y;
+  dragObj.elStartLeft  = parseInt(dragObj.elNode.style.left, 10);
+  dragObj.elStartTop   = parseInt(dragObj.elNode.style.top,  10);
+ 
+  if (isNaN(dragObj.elStartLeft)) dragObj.elStartLeft = 0;
+  if (isNaN(dragObj.elStartTop))  dragObj.elStartTop  = 0;
+ 
+  // Update element's z-index.
+ 
+  dragObj.elNode.style.zIndex = ++dragObj.zIndex;
+ 
+  // Capture mousemove and mouseup events on the page.
+ 
+  if (browser.isIE) {
+    document.attachEvent("onselectstart", _Null);
+    document.attachEvent("onmousemove", dragGo);
+    document.attachEvent("ontouchmove", dragGo);
+    document.attachEvent("ontouchend",  dragStop);
+    document.attachEvent("onmouseup",   dragStop);
+    window.event.cancelBubble = true;
+    window.event.returnValue = false;
+  }
+  if (browser.isNS) {
+    document.addEventListener("selectstart", _Null,  true);
+    document.addEventListener("mousemove", dragGo,   true);
+    document.addEventListener("touchmove", dragGo,   true);
+    document.addEventListener("touchend",  dragStop, true);
+    document.addEventListener("mouseup",   dragStop, true);
+    event.preventDefault();
+  }
+}
+ 
+function dragGo(event) {
+ 
+  var x, y;
+ 
+  // Get cursor position with respect to the page.
+  x = Cursor.x;
+  y = Cursor.y;
+ 
+  // Move drag element by the same amount the cursor has moved.
+ 
+  dragObj.elNode.style.left = (dragObj.elStartLeft + x - dragObj.cursorStartX) + "px";
+  dragObj.elNode.style.top  = (dragObj.elStartTop  + y - dragObj.cursorStartY) + "px";
+ 
+  if (browser.isIE) {
+    window.event.cancelBubble = true;
+    window.event.returnValue = false;
+  }
+  if (browser.isNS)
+    event.preventDefault();
+}
+ 
+function dragStop(event) {
+ 
+  // Stop capturing mousemove and mouseup events.
+ 
+  if (browser.isIE) {
+    document.detachEvent("onselectstart", _Null);
+    document.detachEvent("onmousemove", dragGo);
+    document.detachEvent("ontouchmove", dragGo);
+    document.detachEvent("ontouchend",  dragGo);
+    document.detachEvent("onmouseup",   dragStop);
+  }
+  if (browser.isNS) {
+    document.removeEventListener("selectstart", _Null,  true);
+    document.removeEventListener("mousemove", dragGo,   true);
+    document.removeEventListener("touchmove", dragGo,   true);
+    document.removeEventListener("touchend",  dragStop, true);
+    document.removeEventListener("mouseup",   dragStop, true);
+  }
+}
+ 
+//]]></script>

@@ -1,0 +1,152 @@
+.text-area, .text-area .viewport, .text-area .content {
+    -fx-background-color: transparent ;
+	-fx-border-color: transparent ;
+}
+
+.text-field, .text-field .viewport, .text-field .content {
+    -fx-background-color: transparent ;
+	-fx-border-color: transparent ;
+}
+
+.scroll-pane, .scroll-pane .viewport, .scroll-pane .content {
+    -fx-background-color: transparent ;
+	-fx-border-color: transparent ;
+}
+
+.text-area > .scroll-pane {-fx-vbar-policy: never ; /* Toggle visability of the virtical scrollbar (always,needed,never) */} /* */
+
+/** ----------------------------- **/
+
+/** CSS **/
+
+/* The main scrollbar CSS class of ListView */
+.text-area .scroll-bar:horizontal ,
+.text-area  .scroll-bar:vertical{
+    -fx-background-color:transparent;
+
+}
+
+/* The increment and decrement button CSS class of scrollbar */
+.text-area .increment-button ,.text-area .decrement-button {
+    -fx-background-color:transparent;
+	-fx-background-radius: 2em;
+
+}
+
+/** This is soposed to be to remove the arrows from the scroll bar **
+.text-area  .scroll-bar .increment-arrow,
+.text-area  .scroll-bar .decrement-arrow,
+ {
+	-fx-shape: null;	
+	-fx-padding:0;
+}/* */
+
+/* The main scrollbar **track** CSS class  */
+.text-area .scroll-bar:horizontal .track,
+.text-area .scroll-bar:vertical .track{
+	-fx-background-color: transparent;
+	-fx-border-color:derive(gray,80%);
+
+	-fx-background-radius: 2em;
+	-fx-border-radius:2em;
+}
+
+/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
+.text-area .scroll-bar:horizontal .thumb,
+.text-area .scroll-bar:vertical .thumb {
+    -fx-background-color:derive(black,90%);
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+
+}
+
+/* ------------------------------------------------------------------------------------- */
+/** EVENT CSS **/
+/* ------------------------------------------------------------------------------------- */
+
+/* The main scrollbar **track** CSS class on event of "hover" and "pressed" */
+
+.text-area .scroll-bar:horizontal:hover .track ,
+.text-area .scroll-bar:horizontal:pressed .track ,
+.text-area .scroll-bar:vertical:hover .track,
+.text-area .scroll-bar:vertical:pressed .track{
+     -fx-background-color:transparent;
+
+	 -fx-opacity: 0.2;
+	 -fx-background-radius: 0em;
+
+}
+
+/* The main scrollbar **thumb** CSS class on event of "hover" and "pressed" */
+.text-area .scroll-bar .thumb:hover,
+.text-area .scroll-bar .thumb:pressed{
+    -fx-background-color: derive(black,50%);
+}
+.text-area .increment-button:hover ,.text-area .decrement-button:hover {
+    -fx-background-color:derive(transparent,100%);
+	-fx-border-color:derive(transparent,80%);	
+	-fx-padding:10px;
+}
+
+.button{
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.button:focused {
+    -fx-border-color: rgb(0, 0, 0, 0.6);
+	-fx-border-width: 0;
+    -fx-background-radius: 0;
+}
+
+.button:hover {
+	-fx-background-color: rgb(0, 0, 0, 0.3);
+	-fx-text-fill: rgb(200, 200, 200);
+	-fx-border-width: 0;
+    -fx-background-radius: 0;
+}
+
+.button:pressed {
+    -fx-background-color: rgb(0, 0, 0, 0.6);
+	-fx-border-width: 0;
+	-fx-background-radius: 0;
+    -fx-text-fill: white;
+}
+
+
+
+
+.toggle-button{
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-text-fill: white;
+}
+
+.toggle-button:selected {
+    -fx-border-color: transparent;
+	-fx-background-color: rgb(0, 0, 0, 0.6);
+	-fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-text-fill: white;
+}
+
+.toggle-button:hover {
+	-fx-background-color: rgb(0, 0, 0, 0.3);
+	-fx-text-fill: rgb(200, 200, 200);
+	-fx-border-width: 0;
+    -fx-background-radius: 0;
+}
+
+.toggle-button:pressed {
+    -fx-background-color: rgb(0, 0, 0, 0.6);
+	-fx-text-fill: rgb(200, 200, 200);
+	-fx-border-width: 0;
+	-fx-background-radius: 0;
+    -fx-text-fill: white;
+}
+

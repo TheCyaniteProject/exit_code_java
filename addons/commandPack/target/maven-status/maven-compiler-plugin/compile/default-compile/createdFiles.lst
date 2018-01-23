@@ -1,0 +1,11 @@
+addon\Help.class
+addon\DebugTest.class
+addon\Plugin.class
+addon\Logout.class
+addon\Cat.class
+addon\Clear.class
+addon\Debug.class
+addon\Shutdown.class
+addon\Kill.class
+addon\Echo.class
+addon\Pid.class

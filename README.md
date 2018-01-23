@@ -1,40 +1,39 @@
-# Pre-Release 8
-Hello, world!
+![Exit_Code banner](https://preview.ibb.co/nNxv85/EC_LOGO_TRANS.png "Exit_Code logo transparent")
+#### The Free, Open-Source, Desktop & Hacking Simulator Game.
 
-I am happy to announce that after much delay, Pre-Release 8 is rolling out.
+ExitCode is a desktop simulator with a emphasis on hacking. The plan is to take the best parts from my favourite games, combined with (of course) my own original ideas, and turn them into something great!
 
-I am exhausted... This update has been a nightmare. But in the end, I think it was worth it.
+Here is a brief overview of what's to come:
 
-First and foremost: I re-wrote the window handling system. This made the file slightly smaller, but most importantly made this update's main feature possible.
 
-I also implemented a new ProcessID system. And Terminal commands to go along with them. It's not perfect, but you can see what apps are open within the Terminal, and you can kill them using their PID number.
+* Full Multi-Platform Support (Windows/Linux/Mac)
+* Realistic PC Desktop
+* Web-universe to explore (dark web!!!)
+* Play In-Game Games (Game-ception?)
+* Attack, and team up with other players in multi-player, and connect with friends in the in-game social site (yet to be named)
+* Find various in-game Apps/Scripts/Missions, download player-made ones, or create your own.
+* Take on randomly generated jobs, attack randomly generated systems, and collect information on randomly created NPCs, in a world that expands dynamically as you play.
+* Take either side of the law, or try you luck at playing both, with a reputation system that changes the world around you. (And how the world sees you.)
 
-A while back I posted to Patreon (https://www.patreon.com/posts/... ) showing off a nice piece of artwork by David Refoua. This beautiful piece is now the official wallpaper that comes with the game. In the future, the game will come with multiple images and you will be able to select which one fits you best.
 
-And now to the main event, and why this update is so overdue: App resizing! You can now resize all of the in-game apps. It seems like such a small thing. But it was a nightmare to implement. Though, I'm glad I did. This is the first feature a user came up and asked me for and I am happy that I was able to see it through.
+- - -
 
-Now, I am just one person. I have a vision, a dream; of what this game can be. But I can't do it alone. If you would please leave your suggestions for what should be added next, I would greatly appreciate it.
+- - -
 
-Thank you for all the support.
+![patreon banner](https://orig00.deviantart.net/443c/f/2015/334/4/c/patreon_word_logo_for_light_bg_by_angelasasser-d9imh6a.png "Support development on Patreon!")
+*Don't forget! If you like what you see, and would like to see development continue, **[you can support development on Patreon!](https://www.patreon.com/TheCyaniteProject)***
 
-This update will be exclusive to patreon for now. Probably until Pre-Release 9 - As a thank you for your support.
-([View on Patreon](https://www.patreon.com/posts/pre-release-8-11354560))
+You can check my page for screenshots, and other updates without having to subscribe.
+Patreons can download major updates early! (when they are avalable)
 
-Click on the above link for a screenshot.
+# HELP WANTED
+#### Due to lack of funding, I cannot afford to pay you.
+ (I will, however, make sure to credit you properly for your work)
+* Java Programmers (Any skill level) Preferably ones that have used JavaFX
+* Artists (vector-style or pixel, any skill level) [Example of a "Vector-Style"](http://nerdapproved.com/misc-weirdness/beautiful-minimalist-game-of-thrones-fan-art/)
+* Creative people to design minimal websites to go in my game (This can be a detailed description, image, or HTML)
 
-If you are not yet a Patron, you can subscribe for just $1. By subscribing, you will get access to exclusive downloads, and support me and ExitCode's development. I curentally only have 4 $1 Patrons, and this is my only source of income (yes, I make $4/mo).
-
-https://www.patreon.com/TheCyaniteProject
-
-You can also download Pre-Release 7 under the dev/ branch.
-
-Note:
-This is going to be a common thing where GitHub is one version behind Patreon
-
-#### Pre-Release 9
-I'm really excited about Pre-Release 9, and I think you guys will love it too!
-Sorry, no spoilers. Also I would hate to announce a feature and not be able to deliver. This was almost the case the Pre-Release 8's App Resizing: where I didn't officially announce it, but I did tell a bunch of people about it because I thought I was almost done and it almost blew up in my face. So this time around the release notes are staying with me until the jar is up for download.
-
-One thing I will say, which isn't really good news, is that there is a real os called NIXos. It's a Linux distro. So, we're having to change our in-game OS branding. For now we're going with PiXELos, but this might change. Whatever we go with, it will be decided, and shipped with Pre-Release 9, and I might patch Pre-Release 8 as well and replace the wallpaper.
-
-Thanks for the support!
+Contact:
+Telegram ```@TheCyaniteProject```
+Twitter ```@exit_code_dev```
+Email ```TheCyaniteProject@gmail.com```

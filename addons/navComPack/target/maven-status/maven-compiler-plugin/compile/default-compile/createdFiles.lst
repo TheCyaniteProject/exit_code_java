@@ -1,0 +1,5 @@
+addon\CD.class
+addon\Plugin.class
+addon\Rm.class
+addon\Dir.class
+addon\Mkdir.class

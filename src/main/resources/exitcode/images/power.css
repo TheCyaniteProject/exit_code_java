@@ -1,0 +1,21 @@
+.button {
+    -fx-background-color: transparent;
+    -fx-background-image: url('power.png');
+    -fx-background-size: 20px;
+    -fx-background-repeat: no-repeat;
+}
+
+.button:hover {
+    -fx-background-color: transparent;
+	-fx-background-image: url('power.png');
+    -fx-background-size: 20px;
+    -fx-background-repeat: no-repeat;
+
+}
+
+.button:pressed {
+    -fx-background-color: transparent;
+    -fx-background-image: url('power.png');
+    -fx-background-size: 20px;
+    -fx-background-repeat: no-repeat;
+}

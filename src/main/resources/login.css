@@ -1,0 +1,75 @@
+.scroll-pane, .scroll-pane .viewport, .scroll-pane .content {
+    -fx-background-color: transparent;
+	-fx-border-color: transparent;
+}
+
+.text-field, .text-field .viewport, .text-field .content {
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+	-fx-border-color: transparent;
+    -fx-text-fill: lightgray;
+}
+
+.password-field, .password-field .viewport, .password-field .content {
+    -fx-background-color: transparent;
+	-fx-border-color: transparent;
+    -fx-text-fill: lightgray;
+}
+
+.check-box, .check-box .viewport, .check-box .content {
+    -fx-background-color: transparent;
+    -fx-font-family:"Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 1em;
+    -fx-text-fill: lightgray;
+    -fx-background-radius: 0;
+    -fx-padding: 5;
+}
+
+.check-box .box {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-style: solid inside;
+    -fx-border-width: .5;
+    -fx-border-insets: 5;
+    -fx-border-color: rgb(100, 100, 100);
+}
+
+.check-box:hover .box {
+	-fx-background-color: rgb(0, 0, 0, 0.3);
+}
+
+.check-box:selected .mark {
+    -fx-background-color: lightgray;
+}
+
+.progress-bar .bar { 
+    -fx-padding: 1px; 
+    -fx-background-insets: 0; 
+}
+
+.button {
+    -fx-text-fill: lightgray;
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-padding: 5;
+    -fx-border-style: solid inside;
+    -fx-border-width: .5;
+    -fx-border-insets: 5;
+    -fx-border-color: rgb(100, 100, 100);
+}
+
+.button:focused {
+    -fx-background-radius: 0;
+}
+
+.button:hover {
+	-fx-background-color: rgb(0, 0, 0, 0.3);
+	-fx-text-fill: rgb(200, 200, 200);
+    -fx-background-radius: 0;
+}
+
+.button:pressed {
+    -fx-background-color: rgb(0, 0, 0, 0.6);
+	-fx-background-radius: 0;
+    -fx-text-fill: white;
+}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<data>
+    <themedata>
+        <!-- Desktop -->
+        <useWallpaper>true</useWallpaper>
+        <desktopColor>0x003333ff</desktopColor>
+        <desktopWallpaper>/resources/wallpapers/PiXElos_Mountain_Landscape_by_Giulia_Filippini_and_David_Refoua.png</desktopWallpaper>
+        <desktopFont>/resources/fonts/Roboto-Regular.ttf</desktopFont>
+        <desktopFontSize>12</desktopFontSize>
+        <taskbarMainColor>0x232325ff</taskbarMainColor>
+        <taskbarFontColor>0xd3d3d3ff</taskbarFontColor>
+        <!-- Apps -->
+        <close_img>images/windows_controls/window_control_close.png</close_img>
+        <maximize_img>images/windows_controls/window_control_maximize.png</maximize_img>
+        <minimize_img>images/windows_controls/window_control_minimize.png</minimize_img>
+        <restore_img>images/windows_controls/window_control_restore.png</restore_img>
+        <windowFont>/resources/fonts/Roboto-Regular.ttf</windowFont>
+        <windowFontSize>12</windowFontSize>
+        <terminalFont>/resources/fonts/RobotoSlab-Regular.ttf</terminalFont>
+        <terminalFontSize>11</terminalFontSize>
+        <windowHeaderColor>0x232325ff</windowHeaderColor>
+        <windowMainColor>0x232325ff</windowMainColor>
+        <windowFontColor>0xd3d3d3ff</windowFontColor>
+        <shadowsenabled>true</shadowsenabled>
+    </themedata>
+</data>

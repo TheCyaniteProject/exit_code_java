@@ -1,0 +1,29 @@
+<data>
+    <error404>
+        <ingame>true</ingame>
+        <jarfile>true</jarfile>
+        <prefix>browser://</prefix>
+        <location>/web/404/index.html</location>
+        <sublocation>/web/404/</sublocation>
+    </error404>
+    <home>
+        <ingame>true</ingame>
+        <jarfile>true</jarfile>
+        <prefix>browser://</prefix>
+        <location>/web/home/index.html</location>
+        <sublocation>/web/home/</sublocation>
+    </home>
+    <website_com>
+        <ingame>true</ingame>
+        <jarfile>true</jarfile>
+        <prefix>http://www.</prefix>
+        <location>/web/website/index.html</location>
+        <sublocation>/web/website/</sublocation>
+    </website_com>
+    <!-- Real Website Example
+    <google_com>
+        <ingame>false</ingame>
+        <location>http://www.google.com</location>
+    </google_com>
+    -->
+</data>
